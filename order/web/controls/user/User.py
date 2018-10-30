@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint,render_template, request, jsonify
+from flask import Blueprint,render_template, request, jsonify, make_response
 from common.models.User import User
 import json
 from common.libs.user.userService import UserService
+from application import app
+
 
 route_user = Blueprint( 'user_page',__name__ )
+
 
 @route_user.route( "/login", methods = ['GET', 'POST'])
 def login():
@@ -14,7 +17,6 @@ def login():
     resp = {'code': 200, 'msg': '登录成功', 'data': {}}
     login_name= req['login_name'] if 'login_name' in req else ''
     login_pwd= req['login_pwd'] if 'login_pwd' in req else ''
-
     #判断用户名
     if login_name is None or len(login_name) < 1:
         resp['code'] = -1
@@ -27,7 +29,7 @@ def login():
         return jsonify(resp)
 
     
-    user_info = User.query.filter_by( login_name = login_name).first()
+    user_info = User.query.filter_by(login_name = login_name).first()
     if not user_info:
         resp['code'] = -1
         resp['msg'] = '请输入正确的用户名和密码'
@@ -38,7 +40,9 @@ def login():
         resp['msg'] = u'请输入正确的用户名和密码-1'
         return jsonify(resp)
 
-    return jsonify(resp)
+    response = make_response(json.dumps({'code': 200, 'msg': '登录成功！'}))
+    response.set_cookie(app.config['AUTH_COOKIE_NAME'], '%s#%s' % (UserService.geneAuthCode(user_info), user_info.uid), 60 * 60 * 24 * 120)
+    return response
 
 
 

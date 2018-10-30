@@ -2,19 +2,18 @@
 {% block content %}
 <div class="loginColumns animated fadeInDown">
 	<div class="row">
-
 		<div class="col-md-6 text-center">
 			<h2 class="font-bold">{{ config.SEO_TITLE }}</h2>
 			<p>
-				<img src="{{ buildStaticUrl('/images/common/mini_qrcode.jpg') }}" width="300px">
+				<img src="{{ buildStaticUrl('/images/common/1.jpg') }}" width="300px">
 			</p>
             <p class="text-danger">
-                扫描关注查看Demo
+                welcome to my world
             </p>
 		</div>
 		<div class="col-md-6">
 			<div class="ibox-content">
-				<div class="m-t login-wrap" role="form">
+				<div class="m-t login_wrap" role="form">
                     <div class="form-group text-center">
                         <h2 class="font-bold">登录</h2>
                     </div>
@@ -39,4 +38,7 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+{% block js%}
+	<script src="{{ buildStaticUrl('/js/user/login.js')}}"></script>
 {% endblock %}
