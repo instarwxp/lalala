@@ -19,7 +19,7 @@ var user_login_ops = {
                 common_ops.alert('请输入正确的用户名或密码')
                 return
             }
-            btn_target.addClass( "disabled" );  
+            btn_target.addClass( "disabled" );
             $.ajax({
                 url: common_ops.buildUrl('/user/login'),
                 type: 'POST',
@@ -29,11 +29,13 @@ var user_login_ops = {
                     btn_target.removeClass("disabled");
                     var callback = null;
                     if( res.code == 200 ){
+                        alert(window.location.href);
                         callback = function(){
-                            window.location.href = common_ops.buildUrl("/")
+                            window.location.href = common_ops.buildUrl("/");
+                            alert(window.location.href);
                         }
                     }
-                    common_ops.alert( res.msg, callback )
+                    alert( res.msg,callback );
                 }
             });
         });
